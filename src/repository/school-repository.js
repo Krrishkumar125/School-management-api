@@ -14,6 +14,15 @@ class SchoolRepository{
             throw error;
         }
     }
+
+    async getAllSchool(){
+        try {
+            const schools = await School.findAll();
+            return schools;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = SchoolRepository

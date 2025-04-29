@@ -5,5 +5,6 @@ const SchoolController = require('../controllers/school-controller');
 const router = express.Router();
 
 router.post('/addSchool' , SchoolController.create);
+router.get('/listSchools' , SchoolController.listSchools);
 
 module.exports = router;
