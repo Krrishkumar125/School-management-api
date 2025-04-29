@@ -19,14 +19,6 @@ const validateCreateSchool = (req, res, next) => {
     });
   }
 
-  if (typeof latitude !== "number" || typeof longitude !== "number") {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      message: "Latitude and Longitude must be numbers.",
-      success: false,
-      data : {}
-    });
-  }
-
   if (latitude < -90 || latitude > 90) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       message: "Latitude must be between -90 and 90.",
