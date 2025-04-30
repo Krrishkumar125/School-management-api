@@ -174,33 +174,33 @@ npm start
 
 ---
 
-## 🔁 Root Endpoint (`/`)
+## 🔁 Root Endpoint (`/info`)
 
-You can test the root route at [http://13.60.223.91:8000](http://13.60.223.91:8000). It returns a helpful API guide like:
+You can test the info route at [http://13.60.223.91:8000/info](http://13.60.223.91:8000/info). It returns a helpful API guide like:
 
 ```json
 {
-  "message": "🎓 Welcome to the School Management Backend API!",
-  "deployedAt": "http://13.60.223.91:8000",
-  "status": "Live",
-  "usage": {
-    "addSchool": {
+  "message": "Welcome to the School Management Backend API!",
+  "routes": {
+    "/addSchool": {
       "method": "POST",
-      "route": "/api/v1/addSchool",
+      "description": "Add a new school",
       "body": {
-        "name": "String",
-        "address": "String",
-        "latitude": "Number",
-        "longitude": "Number"
+        "name": "String - name of the school",
+        "address": "String - address of the school",
+        "latitude": "Number - latitude coordinate",
+        "longitude": "Number - longitude coordinate"
       }
     },
-    "listSchools": {
+    "/listSchools": {
       "method": "GET",
-      "route": "/api/v1/listSchools?latitude=<lat>&longitude=<long>",
-      "description": "Returns list of schools sorted by distance."
+      "description": "List schools sorted by proximity to the user",
+      "body": {
+        "latitude": "Number - user's latitude coordinate",
+        "longitude": "Number - user's longitude coordinate"
+      }
     }
-  },
-  "note": "Built with Node.js, Express, Sequelize, Docker, and deployed on AWS EC2 with RDS MySQL."
+  }
 }
 ```
 
