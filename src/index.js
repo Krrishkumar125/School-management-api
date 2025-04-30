@@ -11,11 +11,7 @@ const setupAndStartServer = async () => {
        app.use(bodyParser.json());
        app.use(bodyParser.urlencoded({extended:true}));
 
-       app.use('/api/v1' , apiRoutes);
-
-       app.get('/info',(req , res) =>{
-              res.json({message:'OK'});
-       })
+       app.use('/' , apiRoutes);
 
        app.listen(PORT , ()=>{
         console.log(`Server started on the PORT ${PORT}`);
