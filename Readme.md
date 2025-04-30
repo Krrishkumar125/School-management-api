@@ -4,23 +4,53 @@ This is a backend assignment project for **Educase India**, developed using **No
 
 ---
 
+## 🌐 Live Deployment
+
+- 🚀 Deployed on **AWS EC2** using **Docker**
+- 🐬 MySQL database hosted on **AWS RDS**
+- 🌍 Live URL: [http://13.60.223.91:8000](http://13.60.223.91:8000)
+
+---
+
+## 🐳 Dockerized Setup
+
+This project includes a `Dockerfile` to containerize the backend service.
+
+### 🔧 Build Docker Image
+
+```bash
+docker build -t school-management .
+```
+
+### ▶️ Run Docker Container
+
+```bash
+docker run -dit --init --name schoolmanagement \
+  -p 8000:8000 \
+  -v "$(pwd)":/developer/nodejs/school-management \
+  -v school-management-node-modules:/developer/nodejs/school-management/node_modules \
+  school-management:latest
+```
+
+Make sure your EC2 instance allows inbound traffic on port `8000`.
+
+---
+
 ## 📁 Folder Structure
 
-````bash
+```bash
 src/
-├── config/ # Custom server configuration
-│  └── config.json # Sequelize DB config
-├── controllers/ # API logic (SchoolController)
-├── middlewares/ # Custom request validators
-├── migrations/ # Sequelize migrations
-├── models/ # Sequelize models
-├── repository/ # Custom DB access logic
-├── routes/ # API route definitions
-├── seeders/ # Sequelize seed data (optional)
-├── services/ # Business logic layer
-├── utils/ # Utility functions (e.g. haversine)
-└── index.js # Main server entry point
-````
+├── config/         # Sequelize DB config
+├── controllers/    # API logic
+├── middlewares/    # Request validators
+├── migrations/     # Sequelize DB migrations
+├── models/         # Sequelize models
+├── repository/     # DB access logic
+├── routes/         # API endpoints
+├── seeders/        # Optional seed data
+├── services/       # Business logic layer
+└── index.js        # Server entry point
+```
 
 ---
 
@@ -30,86 +60,69 @@ src/
 - List schools sorted by distance using the Haversine formula.
 - Sequelize-based DB modeling with migrations and CLI support.
 - Layered architecture (Controllers, Services, Repositories).
+- Dockerfile for containerized deployment.
 
 ---
 
 ## 🧪 API Endpoints
 
-### ➕ Add School  
+### ➕ Add School
 
-**POST** `/api/v1/addSchool`
+**POST** `/addSchool`
 
 **Request Body:**
 
 ```json
 {
   "name": "Green Valley School",
-  "address": "123 , Main Street , Mumbai",
-  "latitude": 19.0760,
+  "address": "123, Main Street, Mumbai",
+  "latitude": 19.076,
   "longitude": 72.8777
 }
 ```
 
-**Success Response:**
+**Response:**
 
 ```json
 {
-    "data": {
-        "id": 52,
-        "name": "Green Valley School",
-        "address": "123 , Main Street , Mumbai",
-        "latitude": "19.0760",
-        "longitude": "72.8777",
-        "updatedAt": "2025-04-29T10:26:17.115Z",
-        "createdAt": "2025-04-29T10:26:17.115Z"
-    },
-    "success": true,
-    "message": "Successfully added the school",
-    "err": {}
+  "data": {
+    /* school info */
+  },
+  "success": true,
+  "message": "Successfully added the school",
+  "err": {}
 }
 ```
 
 ---
 
-### 📍 List Schools by Location  
+### 📍 List Schools by Location
 
-**GET** `/api/v1/listSchools?latitude=28.567&longitude=77.345`
+**GET** `/listSchools?latitude=28.567&longitude=77.345`
 
-**Success Response:**
+**Response:**
 
 ```json
-  {
-    "data": [
-        {
-            "id": 47,
-            "name": "Chettinad Vidyashram",
-            "address": "R.A. Puram, Chennai",
-            "latitude": 13.032,
-            "longitude": 80.2508,
-            "createdAt": "2025-04-29T07:07:37.000Z",
-            "updatedAt": "2025-04-29T07:07:37.000Z",
-            "distance": 333.0981774022335
-        },
-        {
-            "id": 29,
-            "name": "Chinmaya Vidyalaya",
-            "address": "Anna Nagar, Chennai",
-            "latitude": 13.0827,
-            "longitude": 80.2707,
-            "createdAt": "2025-04-29T07:07:37.000Z",
-            "updatedAt": "2025-04-29T07:07:37.000Z",
-            "distance": 338.9201842863492
-        },
-    ],
-    "success": true,
-    "message": "Successfully fetched the schools and sorted them by proximity",
-    "err": {}
+{
+  "data": [
+    {
+      "id": 47,
+      "name": "Chettinad Vidyashram",
+      "address": "R.A. Puram, Chennai",
+      "latitude": 13.032,
+      "longitude": 80.2508,
+      "distance": 333.09
+    }
+  ],
+  "success": true,
+  "message": "Successfully fetched the schools and sorted them by proximity",
+  "err": {}
 }
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Local Setup Instructions
 
 ### 1. Clone the Repo
 
@@ -130,24 +143,17 @@ npm install
 npx sequelize init
 ```
 
-This creates:
-
-- `config/config.json`
-- `models/`
-- `migrations/`
-- `seeders/`
-
 ### 4. Configure `config/config.json`
 
-Update your `config/config.json` with your DB credentials:
+Update with your RDS or local DB credentials:
 
 ```json
 {
   "development": {
-    "username": "your_mysql_username",
-    "password": "your_mysql_password",
-    "database": "school_db",
-    "host": "127.0.0.1",
+    "username": "your_db_username",
+    "password": "your_db_password",
+    "database": "your_db_database",
+    "host": "your_db_host",
     "dialect": "mysql"
   }
 }
@@ -166,14 +172,44 @@ npx sequelize-cli db:migrate
 npm start
 ```
 
-Server runs on: `http://localhost:<PORT>`
+---
+
+## 🔁 Root Endpoint (`/`)
+
+You can test the root route at [http://13.60.223.91:8000](http://13.60.223.91:8000). It returns a helpful API guide like:
+
+```json
+{
+  "message": "🎓 Welcome to the School Management Backend API!",
+  "deployedAt": "http://13.60.223.91:8000",
+  "status": "Live",
+  "usage": {
+    "addSchool": {
+      "method": "POST",
+      "route": "/api/v1/addSchool",
+      "body": {
+        "name": "String",
+        "address": "String",
+        "latitude": "Number",
+        "longitude": "Number"
+      }
+    },
+    "listSchools": {
+      "method": "GET",
+      "route": "/api/v1/listSchools?latitude=<lat>&longitude=<long>",
+      "description": "Returns list of schools sorted by distance."
+    }
+  },
+  "note": "Built with Node.js, Express, Sequelize, Docker, and deployed on AWS EC2 with RDS MySQL."
+}
+```
 
 ---
 
-## 🧑‍💻 Author
+## 👨‍💻 Author
 
 - **Krrish Kumar**
-- [GitHub: @KrrishKumar125](https://github.com/Krrishkumar125)
+- [GitHub: @KrrishKumar125](https://github.com/KrrishKumar125)
 
 ---
 
