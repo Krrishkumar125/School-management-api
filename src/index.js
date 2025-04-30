@@ -13,6 +13,10 @@ const setupAndStartServer = async () => {
 
        app.use('/api/v1' , apiRoutes);
 
+       app.get('/info',(req , res) =>{
+              res.json({message:'OK'});
+       })
+
        app.listen(PORT , ()=>{
         console.log(`Server started on the PORT ${PORT}`);
        })

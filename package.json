@@ -15,6 +15,7 @@
     "http-status-codes": "^2.3.0",
     "mysql2": "^3.14.1",
     "nodemon": "^3.1.10",
+    "pm2": "^6.0.5",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.2"
   }
