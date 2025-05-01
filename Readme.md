@@ -8,7 +8,7 @@ This is a backend assignment project for **Educase India**, developed using **No
 
 - 🚀 Deployed on **AWS EC2** using **Docker**
 - 🐬 MySQL database hosted on **AWS RDS**
-- 🌍 Live URL: [http://13.60.223.91:8000](http://13.60.223.91:8000)
+- 🌍 Live URL: [13.60.223.91:8000](13.60.223.91:8000)
 
 ---
 
@@ -176,7 +176,7 @@ npm start
 
 ## 🔁 Root Endpoint (`/info`)
 
-You can test the info route at [http://13.60.223.91:8000/info](http://13.60.223.91:8000/info). It returns a helpful API guide like:
+You can test the info route at [13.60.223.91:8000/info](13.60.223.91:8000/info). It returns a helpful API guide like:
 
 ```json
 {
